@@ -14,16 +14,15 @@ def topological_sort(vertices)
 
   until queue.empty?
     current = queue.shift
-    # debugger
     sorted << current
-    current.out_edges.each do |edge|
-      vertex = edge.to_vertex
-      edge.destroy!
+
+    until current.out_edges.length == 0
+      vertex = current.out_edges[0].to_vertex
+      current.out_edges[0].destroy!
       if vertex.in_edges.empty?
-        queue.push(vertex) unless queue.include?(vertex)
+        queue.push(vertex)
       end
     end
-    vertices.delete(current)
   end
 
   sorted
